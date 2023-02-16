@@ -9,6 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -72,6 +76,50 @@ public class MainActivity extends AppCompatActivity {
                 new SlowTask32().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, 20);
             }
         });
+
+        String str = "[\n" +
+                "  {\n" +
+                "    \"userId\": 1,\n" +
+                "    \"id\": 1,\n" +
+                "    \"title\": \"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\",\n" +
+                "    \"body\": \"quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"userId\": 1,\n" +
+                "    \"id\": 2,\n" +
+                "    \"title\": \"qui est esse\",\n" +
+                "    \"body\": \"est rerum tempore vitae\\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\\nqui aperiam non debitis possimus qui neque nisi nulla\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"userId\": 1,\n" +
+                "    \"id\": 3,\n" +
+                "    \"title\": \"ea molestias quasi exercitationem repellat qui ipsa sit aut\",\n" +
+                "    \"body\": \"et iusto sed quo iure\\nvoluptatem occaecati omnis eligendi aut ad\\nvoluptatem doloribus vel accusantium quis pariatur\\nmolestiae porro eius odio et labore et velit aut\"\n" +
+                "  }]";
+
+        try {
+            JSONArray jArr = new JSONArray(str);
+            for (int i = 0; i < jArr.length(); i++) {
+                JSONObject jObj = jArr.getJSONObject(i);
+                int id = jObj.getInt("id");
+                String title = jObj.getString("title");
+                Log.v("TAG", id + " - " + title);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("int_value", 123);
+            jsonObject.put("string_value", "Hello World");
+            jsonObject.put("boolean_value", true);
+            String s = jsonObject.toString();
+            Log.v("TAG", s);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     class SlowTask1 extends AsyncTask<Void, Void, Void> {
